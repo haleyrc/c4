@@ -4,20 +4,14 @@ package main
 
 import (
 	"context"
-	"log"
 	"os"
 
 	"github.com/haleyrc/c4"
 )
 
 func main() {
-	if err := run(context.Background()); err != nil {
-		log.Println("error:", err)
-		os.Exit(1)
-	}
-}
+	ctx := context.Background()
 
-func run(ctx context.Context) error {
 	personalBankingCustomer, _ := c4.NewPerson(ctx, "personalBankingCustomer", c4.PersonArgs{
 		Name:        "Personal Banking Customer",
 		Description: "A customer of the bank with personal bank accounts.",
@@ -168,8 +162,7 @@ func run(ctx context.Context) error {
 	)
 
 	if err := d.PlantUML(ctx, os.Stdout); err != nil {
-		return err
+		panic(err)
 	}
 
-	return nil
 }
