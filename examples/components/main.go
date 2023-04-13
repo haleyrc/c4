@@ -4,20 +4,14 @@ package main
 
 import (
 	"context"
-	"log"
 	"os"
 
 	"github.com/haleyrc/c4"
 )
 
 func main() {
-	if err := run(context.Background()); err != nil {
-		log.Println("error:", err)
-		os.Exit(1)
-	}
-}
+	ctx := context.Background()
 
-func run(ctx context.Context) error {
 	mainframeBankingSystem, _ := c4.NewSystem(ctx, "mainframeBankingSystem", c4.SystemArgs{
 		Name:        "Mainframe Banking System",
 		Description: "Stores all of the core banking information about customers, accounts, transactions, etc.",
@@ -217,8 +211,6 @@ func run(ctx context.Context) error {
 	)
 
 	if err := d.PlantUML(ctx, os.Stdout); err != nil {
-		return err
+		panic(err)
 	}
-
-	return nil
 }
