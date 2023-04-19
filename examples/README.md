@@ -15,3 +15,7 @@
 ## Components
 
 ![Example component diagram](./Components.png)
+
+## Theming
+
+![Example of theming a diagram](./Theming.png)
