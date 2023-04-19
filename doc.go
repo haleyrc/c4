@@ -134,4 +134,44 @@
 //	// ...
 //
 //	d.AddElement(ctx, apiApplicationBoundary)
+//
+// # Theming
+//
+// By default, diagrams are styled using a default theme designed to be neutral
+// and with enough contrast to be accessible. If you would like to style your
+// diagram differently, for instance to match branding guidelines, you can do
+// so by providing a theme object using the WithTheme option.
+//
+// If you do provide a theme, it is important that you fully specify it by
+// providing a value for all available options. Since custom themes are not
+// merged with the defaults provided by this package, any values not specified
+// will pick up the defaults of the C4 extension to PlantUML.
+//
+//	d, _ := c4.NewDiagram(ctx, "Example", c4.WithTheme(c4.Theme{
+//		System: c4.Palette{
+//			BackgroundColor: "red",
+//			FontColor:       "white",
+//		},
+//		Container: c4.Palette{
+//			BackgroundColor: "blue",
+//			FontColor:       "orange",
+//		},
+//		Component: c4.Palette{
+//			BackgroundColor: "yellow",
+//			FontColor:       "black",
+//		},
+//		Person: c4.Palette{
+//			BackgroundColor: "green",
+//			FontColor:       "grey",
+//		},
+//	}))
+//
+// As a convenenience, if you are only interested in tweaking a few values of
+// the default theme, you can do this simply by obtaining a copy of the default
+// with the DefaultTheme function and setting those values explicitly:
+//
+//	theme := c4.DefaultTheme()
+//	theme.System.BackgroundColor = "green"
+//	theme.Person.FontColor = "red"
+//	d, _ := c4.NewDiagram(ctx, "Example", c4.WithTheme(theme))
 package c4

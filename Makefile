@@ -1,6 +1,6 @@
 all: build diagrams clean
 
-examples = basic components containers systems
+examples = basic components containers systems theming
 
 $(examples): tmp
 	go run ./examples/$@ > ./tmp/$@.txt
