@@ -1,9 +1,13 @@
 # c4
 
+> **NOTICE:** This repository is presented as-is. No guarantees are made with regards to quality, suitability, or backwards-compatibility. Use at your own risk.
+
 [![Build Status](https://github.com/haleyrc/c4/actions/workflows/go.yml/badge.svg?branch=main)](https://github.com/haleyrc/c4/actions?query=branch%3Amain)
 [![GoDoc](https://pkg.go.dev/badge/github.com/haleyrc/c4?status.svg)](https://pkg.go.dev/github.com/haleyrc/c4?tab=doc)
 
 A library for describing software systems in Go following the [C4 model](https://c4model.com/).
+
+Before getting started, it's important to note that this library is not intended as a complete implementation of the C4 extension for PlantUML. Functionality is only added as I have a use-case for it. See the [References](#references) section for links to alternatives.
 
 ## Install
 
@@ -40,3 +44,7 @@ $ go run ./examples/basic | java -jar plantuml.jar -p > basic.png
 ```
 
 You are, of course, free to output your PlantUML specification to a file and pass that to the PlantUML CLI as an argument. The `c4` package doesn't make any real assumptions about how you are getting from the Go world to the PlantUML world.
+
+## References
+
+- [go-structurizer - A library for auto-generating C4 diagrams from Go applications](https://github.com/krzysztofreczek/go-structurizr)
