@@ -119,5 +119,15 @@ func main() {
 	containerBoundary.AddElement(ctx, boundedComponent)
 	d.AddElement(ctx, containerBoundary)
 
+	enterpriseBoundary, _ := c4.NewEnterpriseBoundary(ctx, "enterpriseBoundary", c4.EnterpriseBoundaryArgs{
+		Name: "Enterprise Boundary",
+	})
+	boundedSystem, _ := c4.NewSystem(ctx, "boundedSystem", c4.SystemArgs{
+		Name:        "Bounded System",
+		Description: "Optional Description",
+	})
+	enterpriseBoundary.AddElement(ctx, boundedSystem)
+	d.AddElement(ctx, enterpriseBoundary)
+
 	d.PlantUML(ctx, os.Stdout)
 }

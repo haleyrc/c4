@@ -35,6 +35,16 @@ func plantUML(ctx context.Context, w io.Writer, el interface{}) error {
 			}
 		}
 		fmt.Fprintln(w, "}")
+	case *EnterpriseBoundary:
+		fmt.Fprintf(w, `Enterprise_Boundary(%s, "%s") {`, v.ID(), v.name)
+		fmt.Fprintln(w)
+		for _, el := range v.elements {
+			fmt.Fprintf(w, "\t")
+			if err := plantUML(ctx, w, el); err != nil {
+				return err
+			}
+		}
+		fmt.Fprintln(w, "}")
 	case *Database:
 		prefix := "ContainerDb"
 		if v.external {
