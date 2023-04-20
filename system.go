@@ -11,6 +11,9 @@ type SystemArgs struct {
 
 	// A general description of the purpose of the system.
 	Description string
+
+	// Enables alternate styling reserved for external elements.
+	External bool
 }
 
 // MustNewSystem is the same as NewSystem, but panics on any error.
@@ -28,6 +31,7 @@ func NewSystem(ctx context.Context, id string, args SystemArgs) (*System, error)
 		id:          id,
 		name:        args.Name,
 		description: args.Description,
+		external:    args.External,
 	}
 	return s, nil
 }
@@ -40,6 +44,7 @@ type System struct {
 	id          string
 	name        string
 	description string
+	external    bool
 }
 
 // Boundary returns a system boundary which can be used to group sub-containers

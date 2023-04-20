@@ -10,12 +10,20 @@ import (
 func plantUML(ctx context.Context, w io.Writer, el interface{}) error {
 	switch v := el.(type) {
 	case *Component:
+		prefix := "Component"
+		if v.external {
+			prefix += "_Ext"
+		}
 		technologies := strings.Join(v.technologies, ", ")
-		fmt.Fprintf(w, `Component(%s, "%s", "%s", "%s")`, v.ID(), v.name, technologies, v.description)
+		fmt.Fprintf(w, `%s(%s, "%s", "%s", "%s")`, prefix, v.ID(), v.name, technologies, v.description)
 		fmt.Fprintln(w)
 	case *Container:
+		prefix := "Container"
+		if v.external {
+			prefix += "_Ext"
+		}
 		technologies := strings.Join(v.technologies, ", ")
-		fmt.Fprintf(w, `Container(%s, "%s", "%s", "%s")`, v.ID(), v.name, technologies, v.description)
+		fmt.Fprintf(w, `%s(%s, "%s", "%s", "%s")`, prefix, v.ID(), v.name, technologies, v.description)
 		fmt.Fprintln(w)
 	case *containerBoundary:
 		fmt.Fprintf(w, `Container_Boundary(%s, "%s") {`, v.ID(), v.name)
@@ -28,11 +36,19 @@ func plantUML(ctx context.Context, w io.Writer, el interface{}) error {
 		}
 		fmt.Fprintln(w, "}")
 	case *Database:
+		prefix := "ContainerDb"
+		if v.external {
+			prefix += "_Ext"
+		}
 		technologies := strings.Join(v.technologies, ", ")
-		fmt.Fprintf(w, `ContainerDb(%s, "%s", "%s", "%s")`, v.ID(), v.name, technologies, v.description)
+		fmt.Fprintf(w, `%s(%s, "%s", "%s", "%s")`, prefix, v.ID(), v.name, technologies, v.description)
 		fmt.Fprintln(w)
 	case *Person:
-		fmt.Fprintf(w, `Person(%s, "%s", "%s")`, v.ID(), v.name, v.description)
+		prefix := "Person"
+		if v.external {
+			prefix += "_Ext"
+		}
+		fmt.Fprintf(w, `%s(%s, "%s", "%s")`, prefix, v.ID(), v.name, v.description)
 		fmt.Fprintln(w)
 	case *relation:
 		prefix := "Rel"
@@ -52,7 +68,11 @@ func plantUML(ctx context.Context, w io.Writer, el interface{}) error {
 		}
 		fmt.Fprintln(w, "}")
 	case *System:
-		fmt.Fprintf(w, `System(%s, "%s", "%s")`, v.ID(), v.name, v.description)
+		prefix := "System"
+		if v.external {
+			prefix += "_Ext"
+		}
+		fmt.Fprintf(w, `%s(%s, "%s", "%s")`, prefix, v.ID(), v.name, v.description)
 		fmt.Fprintln(w)
 	default:
 		return fmt.Errorf("cannot create plantuml: invalid item type: %T", el)
