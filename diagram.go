@@ -43,6 +43,7 @@ type Diagram struct {
 	theme     Theme
 	elements  []Element
 	relations []*relation
+	sketch    bool
 }
 
 // AddElement adds an element to the resultant PlantUML specification.
@@ -103,6 +104,9 @@ func (d *Diagram) writePreamble(ctx context.Context, buff *bytes.Buffer, title s
 	fmt.Fprintln(buff, "!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml")
 	fmt.Fprintln(buff)
 	fmt.Fprintf(buff, "%s()\n", layout)
+	if d.sketch {
+		fmt.Fprintln(buff, `LAYOUT_AS_SKETCH()`)
+	}
 	fmt.Fprintln(buff)
 	fmt.Fprintf(buff, `UpdateElementStyle(system, $bgColor="%s", $fontColor="%s")`, d.theme.System.BackgroundColor, d.theme.System.FontColor)
 	fmt.Fprintln(buff)
@@ -122,6 +126,12 @@ func (d *Diagram) writeEpilogue(ctx context.Context, buff *bytes.Buffer) error {
 
 // DiagramOptions are used to modify the display characteristics of a diagram.
 type DiagramOption func(*Diagram)
+
+func AsSketch() DiagramOption {
+	return func(d *Diagram) {
+		d.sketch = true
+	}
+}
 
 // WithLayout allows you to set an explicit layout direction for the diagram.
 func WithLayout(l Layout) DiagramOption {
