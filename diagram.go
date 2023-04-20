@@ -23,6 +23,7 @@ func NewDiagram(ctx context.Context, title string, opts ...DiagramOption) (*Diag
 	d := &Diagram{
 		title:  title,
 		layout: DefaultLayout,
+		theme:  DefaultTheme(),
 	}
 
 	for _, opt := range opts {
@@ -39,6 +40,7 @@ func NewDiagram(ctx context.Context, title string, opts ...DiagramOption) (*Diag
 type Diagram struct {
 	title     string
 	layout    Layout
+	theme     Theme
 	elements  []Element
 	relations []*relation
 }
@@ -68,7 +70,7 @@ func (d *Diagram) NewRelation(ctx context.Context, args RelationArgs, opts ...Re
 func (d *Diagram) PlantUML(ctx context.Context, w io.Writer) error {
 	var buff bytes.Buffer
 
-	if err := writePreamble(ctx, &buff, d.title, d.layout); err != nil {
+	if err := d.writePreamble(ctx, &buff, d.title, d.layout); err != nil {
 		return err
 	}
 
@@ -84,7 +86,7 @@ func (d *Diagram) PlantUML(ctx context.Context, w io.Writer) error {
 		}
 	}
 
-	if err := writeEpilogue(ctx, &buff); err != nil {
+	if err := d.writeEpilogue(ctx, &buff); err != nil {
 		return err
 	}
 
@@ -95,17 +97,25 @@ func (d *Diagram) PlantUML(ctx context.Context, w io.Writer) error {
 	return nil
 }
 
-func writePreamble(ctx context.Context, buff *bytes.Buffer, title string, layout Layout) error {
+func (d *Diagram) writePreamble(ctx context.Context, buff *bytes.Buffer, title string, layout Layout) error {
 	fmt.Fprintln(buff, "@startuml", title)
 	fmt.Fprintln(buff, "!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml")
 	fmt.Fprintln(buff, "!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml")
 	fmt.Fprintln(buff)
 	fmt.Fprintf(buff, "%s()\n", layout)
 	fmt.Fprintln(buff)
+	fmt.Fprintf(buff, `UpdateElementStyle(system, $bgColor="%s", $fontColor="%s")`, d.theme.System.BackgroundColor, d.theme.System.FontColor)
+	fmt.Fprintln(buff)
+	fmt.Fprintf(buff, `UpdateElementStyle(container, $bgColor="%s", $fontColor="%s")`, d.theme.Container.BackgroundColor, d.theme.Container.FontColor)
+	fmt.Fprintln(buff)
+	fmt.Fprintf(buff, `UpdateElementStyle(component, $bgColor="%s", $fontColor="%s")`, d.theme.Component.BackgroundColor, d.theme.Component.FontColor)
+	fmt.Fprintln(buff)
+	fmt.Fprintf(buff, `UpdateElementStyle(person, $bgColor="%s", $fontColor="%s")`, d.theme.Person.BackgroundColor, d.theme.Person.FontColor)
+	fmt.Fprintln(buff)
 	return nil
 }
 
-func writeEpilogue(ctx context.Context, buff *bytes.Buffer) error {
+func (d *Diagram) writeEpilogue(ctx context.Context, buff *bytes.Buffer) error {
 	fmt.Fprintln(buff, "@enduml")
 	return nil
 }
@@ -117,5 +127,14 @@ type DiagramOption func(*Diagram)
 func WithLayout(l Layout) DiagramOption {
 	return func(d *Diagram) {
 		d.layout = l
+	}
+}
+
+// WithTheme allows you to set a custom theme for the diagram. You can either
+// create a theme from scratch or use c4.DefaultTheme() and modify the values
+// you care about.
+func WithTheme(t Theme) DiagramOption {
+	return func(d *Diagram) {
+		d.theme = t
 	}
 }
