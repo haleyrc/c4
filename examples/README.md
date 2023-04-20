@@ -1,5 +1,9 @@
 # Examples
 
+## Gallery
+
+![Gallery of elements](./Gallery.png)
+
 ## Basic
 
 ![Example basic diagram](./Basic.png)

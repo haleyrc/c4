@@ -1,7 +1,8 @@
 all: build diagrams clean
 
-examples = basic components containers systems theming
+examples = basic components containers systems theming gallery
 
+.PHONY: $(examples)
 $(examples): tmp
 	go run ./examples/$@ > ./tmp/$@.txt
 	java -jar ./plantuml/plantuml.jar -o ./out ./tmp/*.txt
