@@ -3,6 +3,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"os"
 
 	"github.com/haleyrc/c4"
@@ -11,7 +12,19 @@ import (
 func main() {
 	ctx := context.Background()
 
-	d, _ := c4.NewDiagram(ctx, "Gallery")
+	cfg, err := parseCommandLine(ctx)
+	if err != nil {
+		panic(err)
+	}
+
+	title := "Gallery"
+	opts := []c4.DiagramOption{}
+	if cfg.Sketch {
+		title = "Sketch"
+		opts = append(opts, c4.AsSketch())
+	}
+
+	d, _ := c4.NewDiagram(ctx, title, opts...)
 
 	internalSystem, _ := c4.NewSystem(ctx, "internalSystem", c4.SystemArgs{
 		Name:        "Internal System",
@@ -130,4 +143,17 @@ func main() {
 	d.AddElement(ctx, enterpriseBoundary)
 
 	d.PlantUML(ctx, os.Stdout)
+}
+
+type Config struct {
+	Sketch bool
+}
+
+func parseCommandLine(ctx context.Context) (Config, error) {
+	var cfg Config
+
+	flag.BoolVar(&cfg.Sketch, "sketch", false, "Render the gallery as a sketch")
+	flag.Parse()
+
+	return cfg, nil
 }
