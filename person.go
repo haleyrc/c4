@@ -11,6 +11,9 @@ type PersonArgs struct {
 
 	// A general description of the purpose of the person.
 	Description string
+
+	// Enables alternate styling reserved for external elements.
+	External bool
 }
 
 // MustNewPerson is the same as NewPerson, but panics on any error.
@@ -28,6 +31,7 @@ func NewPerson(ctx context.Context, id string, args PersonArgs) (*Person, error)
 		id:          id,
 		name:        args.Name,
 		description: args.Description,
+		external:    args.External,
 	}
 	return p, nil
 }
@@ -38,6 +42,7 @@ type Person struct {
 	id          string
 	name        string
 	description string
+	external    bool
 }
 
 // ID satisfies the Element interface.

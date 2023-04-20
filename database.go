@@ -15,6 +15,9 @@ type DatabaseArgs struct {
 
 	// An optional list of technologies describing the database e.g. PostgreSQL.
 	Technologies []string
+
+	// Enables alternate styling reserved for external elements.
+	External bool
 }
 
 // MustNewDatabase is the same as NewDatabase, but panics on any error.
@@ -32,6 +35,7 @@ func NewDatabase(ctx context.Context, id string, args DatabaseArgs) (*Database, 
 		id:          id,
 		name:        args.Name,
 		description: args.Description,
+		external:    args.External,
 	}
 	return c, nil
 }
@@ -45,6 +49,7 @@ type Database struct {
 	name         string
 	description  string
 	technologies []string
+	external     bool
 }
 
 // ID satisfies the Element interface.

@@ -14,6 +14,9 @@ type ComponentArgs struct {
 
 	// An optional list of technologies describing the component e.g. Spring Bean.
 	Technologies []string
+
+	// Enables alternate styling reserved for external elements.
+	External bool
 }
 
 // MustNewComponent is the same as NewComponent, but panics on any error.
@@ -32,6 +35,7 @@ func NewComponent(ctx context.Context, id string, args ComponentArgs) (*Componen
 		name:         args.Name,
 		description:  args.Description,
 		technologies: args.Technologies,
+		external:     args.External,
 	}
 	return c, nil
 }
@@ -44,6 +48,7 @@ type Component struct {
 	name         string
 	description  string
 	technologies []string
+	external     bool
 }
 
 // ID satisfies the Element interface.

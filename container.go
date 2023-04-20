@@ -14,6 +14,9 @@ type ContainerArgs struct {
 
 	// An optional list of technologies describing the container e.g. Javascript.
 	Technologies []string
+
+	// Enables alternate styling reserved for external elements.
+	External bool
 }
 
 // MustNewContainer is the same as NewContainer, but panics on any error.
@@ -31,6 +34,7 @@ func NewContainer(ctx context.Context, id string, args ContainerArgs) (*Containe
 		id:          id,
 		name:        args.Name,
 		description: args.Description,
+		external:    args.External,
 	}
 	return c, nil
 }
@@ -46,6 +50,7 @@ type Container struct {
 	name         string
 	description  string
 	technologies []string
+	external     bool
 }
 
 // Boundary returns a container boundary which can be used to group
