@@ -21,5 +21,3 @@ diagrams: $(examples)
 .PHONY: tmp
 tmp:
 	mkdir -p tmp
-
-
