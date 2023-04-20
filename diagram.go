@@ -10,11 +10,11 @@ import (
 // Layout represents the overall layout flow of the resultant diagram.
 type Layout string
 
-const DefaultLayout Layout = LayoutTopDown
-
 const (
 	LayoutTopDown   Layout = "LAYOUT_TOP_DOWN"
 	LayoutLeftRight Layout = "LAYOUT_LEFT_RIGHT"
+
+	DefaultLayout Layout = LayoutTopDown
 )
 
 // NewDiagram constructs a diagram that can be converted to a C4-enabled
@@ -95,16 +95,6 @@ func (d *Diagram) PlantUML(ctx context.Context, w io.Writer) error {
 	return nil
 }
 
-// DiagramOptions are used to modify the display characteristics of a diagram.
-type DiagramOption func(*Diagram)
-
-// WithLayout allows you to set an explicit layout direction for the diagram.
-func WithLayout(l Layout) DiagramOption {
-	return func(d *Diagram) {
-		d.layout = l
-	}
-}
-
 func writePreamble(ctx context.Context, buff *bytes.Buffer, title string, layout Layout) error {
 	fmt.Fprintln(buff, "@startuml", title)
 	fmt.Fprintln(buff, "!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml")
@@ -118,4 +108,14 @@ func writePreamble(ctx context.Context, buff *bytes.Buffer, title string, layout
 func writeEpilogue(ctx context.Context, buff *bytes.Buffer) error {
 	fmt.Fprintln(buff, "@enduml")
 	return nil
+}
+
+// DiagramOptions are used to modify the display characteristics of a diagram.
+type DiagramOption func(*Diagram)
+
+// WithLayout allows you to set an explicit layout direction for the diagram.
+func WithLayout(l Layout) DiagramOption {
+	return func(d *Diagram) {
+		d.layout = l
+	}
 }
