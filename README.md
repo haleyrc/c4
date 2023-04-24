@@ -87,4 +87,6 @@ The following diagrams were generated using the sample code in the `examples/` d
 
 ## References
 
+- [The C4 model for visualising software architecture](https://c4model.com/)
+- [C4-PlantUML - [C]ombines the benefits of PlantUML and the C4 model for providing a simple way of describing and communicate[sic] software architectures](https://github.com/plantuml-stdlib/C4-PlantUML)
 - [go-structurizer - A library for auto-generating C4 diagrams from Go applications](https://github.com/krzysztofreczek/go-structurizr)
