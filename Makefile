@@ -1,6 +1,6 @@
 all: build diagrams clean
 
-examples = basic components containers systems theming
+examples = components containers systems
 
 .PHONY: $(examples)
 $(examples): tmp
@@ -14,7 +14,7 @@ gallery: tmp
 .PHONY: png
 png:
 	java -jar ./plantuml/plantuml.jar -o ./out ./tmp/*.txt
-	cp ./tmp/out/*.png ./examples/
+	cp ./tmp/out/*.png ./docs/
 
 .PHONY: build
 build:
