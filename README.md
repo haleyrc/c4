@@ -47,6 +47,7 @@ You are, of course, free to output your PlantUML specification to a file and pas
 
 ## TODO
 
+- [ ] Queue elements
 - [ ] Deployment diagram support
 - [ ] Dynamic diagram support
 
