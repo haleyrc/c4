@@ -45,6 +45,15 @@ $ go run ./examples/basic | java -jar plantuml.jar -p > basic.png
 
 You are, of course, free to output your PlantUML specification to a file and pass that to the PlantUML CLI as an argument. The `c4` package doesn't make any real assumptions about how you are getting from the Go world to the PlantUML world.
 
+## TODO
+
+- [ ] Deployment diagram support
+- [ ] Dynamic diagram support
+
+### Future
+
+- [ ] Single static definition e.g. the ability to write a single monolithic description of your systems, their containers, and their components, and then use those in building diagrams by only specififying the nodes you want.
+
 ## References
 
 - [go-structurizer - A library for auto-generating C4 diagrams from Go applications](https://github.com/krzysztofreczek/go-structurizr)
