@@ -75,10 +75,14 @@ The following diagrams were generated using the sample code in the `examples/` d
 
 [![Component diagram](./docs/Components.png)](https://c4model.com/#ComponentDiagram)
 
+### Deployment diagram
+
+[![Deployment diagram](./docs/Deployment%20Diagram.png)](https://c4model.com/#DeploymentDiagram)
+
 ## TODO
 
 - [X] Queue elements
-- [ ] Deployment diagram support
+- [X] Deployment diagram support
 - [ ] Dynamic diagram support
 
 ### Future

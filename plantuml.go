@@ -53,6 +53,20 @@ func plantUML(ctx context.Context, w io.Writer, el interface{}) error {
 		technologies := strings.Join(v.technologies, ", ")
 		fmt.Fprintf(w, `%s(%s, "%s", "%s", "%s")`, prefix, v.ID(), v.name, technologies, v.description)
 		fmt.Fprintln(w)
+	case *DeploymentNode:
+		for _, property := range v.properties {
+			fmt.Fprintf(w, `AddProperty("%s", "%s")`, property.Name, property.Value)
+			fmt.Fprintln(w)
+		}
+		fmt.Fprintf(w, `Deployment_Node(%s, "%s", "%s", "%s") {`, v.id, v.name, v.nodeType, v.description)
+		fmt.Fprintln(w)
+		for _, el := range v.elements {
+			fmt.Fprintf(w, "\t")
+			if err := plantUML(ctx, w, el); err != nil {
+				return err
+			}
+		}
+		fmt.Fprintln(w, `}`)
 	case *Person:
 		prefix := "Person"
 		if v.external {
