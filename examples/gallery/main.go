@@ -158,7 +158,33 @@ func main() {
 	enterpriseBoundary.AddElement(ctx, boundedSystem)
 	d.AddElement(ctx, enterpriseBoundary)
 
-	d.PlantUML(ctx, os.Stdout)
+	parentNode, _ := c4.NewDeploymentNode(ctx, "parentNode", c4.DeploymentNodeArgs{
+		Name:        "Parent Node",
+		Description: "A deployment node containing another node.",
+		Properties: []c4.Property{
+			{Name: "Location", Value: "New York"},
+		},
+	})
+	childNode, _ := c4.NewDeploymentNode(ctx, "childNode", c4.DeploymentNodeArgs{
+		Name:        "Child Node",
+		Description: "A deployment node inside another node.",
+		Properties: []c4.Property{
+			{Name: "Memory", Value: "100Mb"},
+			{Name: "Storage", Value: "50Gb"},
+		},
+	})
+	childContainer, _ := c4.NewContainer(ctx, "childContainer", c4.ContainerArgs{
+		Name:         "Child Container",
+		Description:  "A container inside a deployment node.",
+		Technologies: []string{"Technology"},
+	})
+	childNode.AddElement(ctx, childContainer)
+	parentNode.AddElement(ctx, childNode)
+	d.AddElement(ctx, parentNode)
+
+	if err := d.PlantUML(ctx, os.Stdout); err != nil {
+		panic(err)
+	}
 }
 
 type Config struct {

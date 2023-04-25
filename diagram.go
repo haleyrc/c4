@@ -102,7 +102,10 @@ func (d *Diagram) writePreamble(ctx context.Context, buff *bytes.Buffer, title s
 	fmt.Fprintln(buff, "@startuml", title)
 	fmt.Fprintln(buff, "!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml")
 	fmt.Fprintln(buff, "!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml")
+	fmt.Fprintln(buff, "!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml")
 	fmt.Fprintln(buff)
+	fmt.Fprintln(buff, "WithoutPropertyHeader()")
+	fmt.Println(buff)
 	fmt.Fprintf(buff, "%s()\n", layout)
 	if d.sketch {
 		fmt.Fprintln(buff, `LAYOUT_AS_SKETCH()`)
