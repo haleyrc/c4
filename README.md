@@ -77,7 +77,7 @@ The following diagrams were generated using the sample code in the `examples/` d
 
 ## TODO
 
-- [ ] Queue elements
+- [X] Queue elements
 - [ ] Deployment diagram support
 - [ ] Dynamic diagram support
 

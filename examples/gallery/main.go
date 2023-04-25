@@ -56,6 +56,14 @@ func main() {
 	})
 	d.AddElement(ctx, internalDatabase)
 
+	internalQueue, _ := c4.NewQueue(ctx, "internalQueue", c4.QueueArgs{
+		Name:         "Internal Queue",
+		Description:  "Optional Description",
+		Technologies: []string{"Technology"},
+		External:     false,
+	})
+	d.AddElement(ctx, internalQueue)
+
 	internalComponent, _ := c4.NewComponent(ctx, "internalComponent", c4.ComponentArgs{
 		Name:         "Internal Component",
 		Description:  "Optional Description",
@@ -93,6 +101,14 @@ func main() {
 		External:     true,
 	})
 	d.AddElement(ctx, externalDatabase)
+
+	externalQueue, _ := c4.NewQueue(ctx, "externalQueue", c4.QueueArgs{
+		Name:         "External Queue",
+		Description:  "Optional Description",
+		Technologies: []string{"Technology"},
+		External:     false,
+	})
+	d.AddElement(ctx, externalQueue)
 
 	externalComponent, _ := c4.NewComponent(ctx, "externalComponent", c4.ComponentArgs{
 		Name:         "External Component",
