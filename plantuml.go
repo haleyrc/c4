@@ -60,6 +60,14 @@ func plantUML(ctx context.Context, w io.Writer, el interface{}) error {
 		}
 		fmt.Fprintf(w, `%s(%s, "%s", "%s")`, prefix, v.ID(), v.name, v.description)
 		fmt.Fprintln(w)
+	case *Queue:
+		prefix := "ContainerQueue"
+		if v.external {
+			prefix += "_Ext"
+		}
+		technologies := strings.Join(v.technologies, ", ")
+		fmt.Fprintf(w, `%s(%s, "%s", "%s", "%s")`, prefix, v.ID(), v.name, technologies, v.description)
+		fmt.Fprintln(w)
 	case *relation:
 		prefix := "Rel"
 		if v.direction != "" {
