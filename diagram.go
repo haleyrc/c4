@@ -11,7 +11,20 @@ import (
 type Layout string
 
 const (
-	LayoutTopDown   Layout = "LAYOUT_TOP_DOWN"
+	LayoutTopDown  Layout = "LAYOUT_TOP_DOWN"
+	LayoutPortrait Layout = LayoutTopDown
+
+	LayoutLandscape Layout = "LAYOUT_LANDSCAPE"
+
+	// Deprecated: The PlantUML algorithm for LAYOUT_LEFT_RIGHT is insane and
+	// also rotates the directions nonsensically (a reflection across the line
+	// y = -x; a reflection across the y-axis and a 90 degree counter-clockwise
+	// rotation). This causes the relations in the resultant diagram to be
+	// different from the stated directions in the code.
+	//
+	// In the next major version of this library, this option will switch to
+	// LAYOUT_LANDSCAPE under the hood, making it more in line with user
+	// expectations.
 	LayoutLeftRight Layout = "LAYOUT_LEFT_RIGHT"
 
 	DefaultLayout Layout = LayoutTopDown
