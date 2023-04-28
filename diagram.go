@@ -44,6 +44,7 @@ type Diagram struct {
 	elements  []Element
 	relations []*relation
 	sketch    bool
+	legend    bool
 }
 
 // AddElement adds an element to the resultant PlantUML specification.
@@ -123,6 +124,14 @@ func (d *Diagram) writePreamble(ctx context.Context, buff *bytes.Buffer, title s
 }
 
 func (d *Diagram) writeEpilogue(ctx context.Context, buff *bytes.Buffer) error {
+	if d.legend {
+		// The hideStereotype paramater is hard-coded to false here in order to
+		// make the default behavior more consistent with expectations. In
+		// concert with the individual option to hide stereotypes, you can still
+		// easily achieve the same result in an opt-in way.
+		fmt.Fprintln(buff, `SHOW_LEGEND($hideStereotype=false)`)
+		fmt.Fprintln(buff)
+	}
 	fmt.Fprintln(buff, "@enduml")
 	return nil
 }
@@ -143,6 +152,13 @@ func AsSketch() DiagramOption {
 func WithLayout(l Layout) DiagramOption {
 	return func(d *Diagram) {
 		d.layout = l
+	}
+}
+
+// WithLegend enables a legend mapping colors to element types.
+func WithLegend() DiagramOption {
+	return func(d *Diagram) {
+		d.legend = true
 	}
 }
 

@@ -18,7 +18,9 @@ func main() {
 	}
 
 	title := "Gallery"
-	opts := []c4.DiagramOption{}
+	opts := []c4.DiagramOption{
+		c4.WithLegend(),
+	}
 	if cfg.Sketch {
 		title = "Sketch"
 		opts = append(opts, c4.AsSketch())
