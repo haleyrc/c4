@@ -24,6 +24,7 @@ func main() {
 	if cfg.Sketch {
 		title = "Sketch"
 		opts = append(opts, c4.AsSketch())
+		opts = append(opts, c4.HideElementTypes())
 	}
 
 	d, _ := c4.NewDiagram(ctx, title, opts...)
