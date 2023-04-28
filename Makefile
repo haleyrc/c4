@@ -1,6 +1,6 @@
 all: build diagrams clean
 
-examples = components containers systems deployment
+examples = components containers systems deployment dynamic
 
 .PHONY: $(examples)
 $(examples): tmp

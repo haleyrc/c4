@@ -89,6 +89,13 @@ func plantUML(ctx context.Context, w io.Writer, el interface{}) error {
 		}
 		fmt.Fprintf(w, `%s(%s, %s, "%s", "%s")`, prefix, v.src.ID(), v.dst.ID(), v.description, strings.Join(v.technologies, ","))
 		fmt.Fprintln(w)
+	case *step:
+		prefix := "Rel"
+		if v.direction != "" {
+			prefix = fmt.Sprintf("Rel_%s", v.direction)
+		}
+		fmt.Fprintf(w, `%s(%s, %s, "%s", "%s")`, prefix, v.src.ID(), v.dst.ID(), v.description, strings.Join(v.technologies, ","))
+		fmt.Fprintln(w)
 	case *systemBoundary:
 		fmt.Fprintf(w, `System_Boundary(%s, "%s") {`, v.ID(), v.name)
 		fmt.Fprintln(w)

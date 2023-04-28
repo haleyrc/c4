@@ -56,6 +56,7 @@ type Diagram struct {
 	theme            Theme
 	elements         []Element
 	relations        []*relation
+	steps            []*step
 	sketch           bool
 	legend           bool
 	hideElementTypes bool
@@ -64,6 +65,24 @@ type Diagram struct {
 // AddElement adds an element to the resultant PlantUML specification.
 func (d *Diagram) AddElement(ctx context.Context, el Element) {
 	d.elements = append(d.elements, el)
+}
+
+func (d *Diagram) AddSteps(ctx context.Context, stepArgs ...StepArgs) error {
+	for _, args := range stepArgs {
+		if err := d.addStep(ctx, args); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (d *Diagram) addStep(ctx context.Context, args StepArgs) error {
+	step, err := newStep(ctx, args)
+	if err != nil {
+		return err
+	}
+	d.steps = append(d.steps, step)
+	return nil
 }
 
 // NewRelation adds a relation between two elements to the PlantUML
@@ -99,6 +118,17 @@ func (d *Diagram) PlantUML(ctx context.Context, w io.Writer) error {
 	for _, rel := range d.relations {
 		if err := plantUML(ctx, &buff, rel); err != nil {
 			return err
+		}
+	}
+
+	if len(d.steps) > 0 {
+		fmt.Fprintln(&buff)
+		fmt.Fprintln(&buff, `!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Dynamic.puml`)
+		fmt.Fprintln(&buff)
+		for _, step := range d.steps {
+			if err := plantUML(ctx, &buff, step); err != nil {
+				return err
+			}
 		}
 	}
 
