@@ -38,13 +38,14 @@ func NewDiagram(ctx context.Context, title string, opts ...DiagramOption) (*Diag
 // C4-enabled PlantUML representation that can be used to generate visual
 // diagrams using the PlantUML CLI.
 type Diagram struct {
-	title     string
-	layout    Layout
-	theme     Theme
-	elements  []Element
-	relations []*relation
-	sketch    bool
-	legend    bool
+	title            string
+	layout           Layout
+	theme            Theme
+	elements         []Element
+	relations        []*relation
+	sketch           bool
+	legend           bool
+	hideElementTypes bool
 }
 
 // AddElement adds an element to the resultant PlantUML specification.
@@ -124,6 +125,10 @@ func (d *Diagram) writePreamble(ctx context.Context, buff *bytes.Buffer, title s
 }
 
 func (d *Diagram) writeEpilogue(ctx context.Context, buff *bytes.Buffer) error {
+	if d.hideElementTypes {
+		fmt.Fprintln(buff, `HIDE_STEREOTYPE()`)
+		fmt.Fprintln(buff)
+	}
 	if d.legend {
 		// The hideStereotype paramater is hard-coded to false here in order to
 		// make the default behavior more consistent with expectations. In
@@ -145,6 +150,15 @@ type DiagramOption func(*Diagram)
 func AsSketch() DiagramOption {
 	return func(d *Diagram) {
 		d.sketch = true
+	}
+}
+
+// HideElementTypes hides the type line that appears at the top of rendered
+// diagram elements. This can be especially useful in concert with the
+// WithLegend option or if the type of elements is unimportant to your diagram.
+func HideElementTypes() DiagramOption {
+	return func(d *Diagram) {
+		d.hideElementTypes = true
 	}
 }
 
