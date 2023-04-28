@@ -130,6 +130,9 @@ func (d *Diagram) writeEpilogue(ctx context.Context, buff *bytes.Buffer) error {
 // DiagramOptions are used to modify the display characteristics of a diagram.
 type DiagramOption func(*Diagram)
 
+// AsSketch causes the diagram to be rendered in a sketch-like style. The
+// diagram also gets a disclaimer indicating that it still needs to be validated
+// and is for discussion only.
 func AsSketch() DiagramOption {
 	return func(d *Diagram) {
 		d.sketch = true
