@@ -22,7 +22,7 @@ type StepArgs struct {
 	// between the elements of the step e.g. "JSON/HTTPS" or "SQL/TCP".
 	Technologies []string
 
-	Direction Direction
+	Direction *string
 }
 
 func newStep(ctx context.Context, args StepArgs) (*step, error) {
@@ -42,5 +42,5 @@ type step struct {
 	dst          Element
 	description  string
 	technologies []string
-	direction    Direction
+	direction    *string
 }

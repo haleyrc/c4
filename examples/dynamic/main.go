@@ -52,7 +52,7 @@ func main() {
 			Dst:          c2,
 			Description:  "Submits credentials to",
 			Technologies: []string{"JSON/HTTPS"},
-			Direction:    c4.DirectionRight,
+			Direction:    c4.Direction(c4.DirectionRight),
 		},
 		c4.StepArgs{
 			Src:         c2,
@@ -64,7 +64,7 @@ func main() {
 			Dst:          c4db,
 			Description:  "select * from users where username = ?",
 			Technologies: []string{"JDBC"},
-			Direction:    c4.DirectionRight,
+			Direction:    c4.Direction(c4.DirectionRight),
 		},
 	)
 

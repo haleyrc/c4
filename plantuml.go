@@ -91,8 +91,8 @@ func plantUML(ctx context.Context, w io.Writer, el interface{}) error {
 		fmt.Fprintln(w)
 	case *step:
 		prefix := "Rel"
-		if v.direction != "" {
-			prefix = fmt.Sprintf("Rel_%s", v.direction)
+		if v.direction != nil && *v.direction != "" {
+			prefix = fmt.Sprintf("Rel_%s", *v.direction)
 		}
 		fmt.Fprintf(w, `%s(%s, %s, "%s", "%s")`, prefix, v.src.ID(), v.dst.ID(), v.description, strings.Join(v.technologies, ","))
 		fmt.Fprintln(w)

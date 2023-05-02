@@ -7,13 +7,17 @@ import (
 // Direction represents the "arrow key" direction of the relation in the
 // resultant diagram. PlantUML will use the direction when laying out elements
 // within the physical constraints of the diagram itself.
-type Direction string
+// type Direction string
+
+func Direction(s string) *string {
+	return &s
+}
 
 const (
-	DirectionUp    Direction = "Up"
-	DirectionDown  Direction = "Down"
-	DirectionLeft  Direction = "Left"
-	DirectionRight Direction = "Right"
+	DirectionUp    string = "Up"
+	DirectionDown  string = "Down"
+	DirectionLeft  string = "Left"
+	DirectionRight string = "Right"
 )
 
 // RelationArgs describes the parameters available for configuring a relation
@@ -39,7 +43,7 @@ type RelationArgs struct {
 type RelationOption func(*relation)
 
 // WithDirection allows you to set an explicit direction for the relation.
-func WithDirection(d Direction) RelationOption {
+func WithDirection(d string) RelationOption {
 	return func(r *relation) {
 		r.direction = d
 	}
@@ -65,5 +69,5 @@ type relation struct {
 	dst          Element
 	description  string
 	technologies []string
-	direction    Direction
+	direction    string
 }
