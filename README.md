@@ -25,6 +25,7 @@ $ go get -u github.com/haleyrc/c4
 When generating diagrams with PlantUML, you generally write a specification in
 the PlantUML "language" in a plain text file and then use either the [online server](https://www.plantuml.com/plantuml/) or the CLI to convert that specification to a PNG/SVG/etc. This package focuses exclusively on the first portion of this process by allowing you to write your specification in Go rather than the PlantUML DSL. This has a number of benefits including test, error handling, and re-use. If you are familiar with infrastructure-as-code tooling, this package draws a lot of inspiration from Pulumi where native PlantUML is more akin to writing Terraform configs in raw HCL.
 
+
 Given the following minimal program:
 
 ```go
